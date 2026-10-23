@@ -3,7 +3,7 @@
 Requires pyte + Pillow in the Python environment. Outputs raw capture to /tmp.
 Run from the repository root: python3 scripts/demo/capture.py
 """
-import os, pty, subprocess, select, time, fcntl, termios, struct, json, tempfile, codecs
+import os, pty, subprocess, select, time, fcntl, termios, struct, json, tempfile, codecs, re
 from pathlib import Path
 import pyte
 ROOT = Path(__file__).resolve().parents[2]
@@ -15,7 +15,7 @@ fcntl.ioctl(slave, termios.TIOCSWINSZ, struct.pack('HHHH', 25, 112, 0, 0))
 node_dir = str(Path(subprocess.check_output(['which','node'], text=True).strip()).parent)
 pi = subprocess.check_output(['which','pi'], text=True).strip()
 env = {'PATH': node_dir + ':/opt/homebrew/bin:/usr/bin:/bin', 'HOME': str(WORK/'home'), 'PI_CODING_AGENT_DIR': str(WORK/'agent'), 'PI_OFFLINE': '1', 'TERM': 'xterm-256color', 'COLORTERM': 'truecolor', 'LANG': 'en_US.UTF-8', 'SHELL': '/bin/sh'}
-args = [pi, '--offline', '--no-session', '--no-extensions', '--no-skills', '--no-prompt-templates', '--no-context-files', '--no-themes', '--no-mcp', '--no-builtin-tools', '--no-approve', '--theme', str(ROOT/'scripts/demo/secure-demo.json'), '--use-theme', 'secure-demo', '--model', 'anthropic/claude-sonnet-4-6', '--api-key', 'demo-only-not-a-real-credential', '-e', str(ROOT/'scripts/demo/driver.ts')]
+args = [pi, '--offline', '--no-session', '--no-extensions', '--no-skills', '--no-prompt-templates', '--no-context-files', '--no-themes', '--no-mcp', '--no-builtin-tools', '--no-approve', '--theme', str(ROOT/'scripts/demo/secure-demo.json'), '--use-theme', 'secure-demo', '--model', 'anthropic/claude-sonnet-4-6', '--api-key', 'example-local-api-token', '-e', str(ROOT/'scripts/demo/driver.ts')]
 p = subprocess.Popen(args, cwd=WORK, env=env, stdin=slave, stdout=slave, stderr=slave, start_new_session=True)
 os.close(slave)
 screen = pyte.Screen(112,25); stream = pyte.Stream(screen); decoder = codecs.getincrementaldecoder('utf-8')(errors='replace')
@@ -27,6 +27,9 @@ while time.monotonic()-start < 45:
         if not chunk: break
         raw.extend(chunk)
         if b'\x1b[6n' in chunk: os.write(master,b'\x1b[1;1R')
+        # Kitty keyboard protocol negotiation is nonprinting; pyte does not
+        # understand its private CSI prefixes and otherwise leaves a stray 'u'.
+        chunk = re.sub(rb'\x1b\[[?><][0-9;]*u', b'', chunk)
         stream.feed(decoder.decode(chunk))
     now=time.monotonic()
     if not sent and now-start>3:
@@ -41,3 +44,8 @@ if p.poll() is None: p.terminate()
 print(WORK)
 print('frames:',len(frames),'seconds:',frames[-1]['time'] if frames else 0)
 print('\n'.join(screen.display))
+
+verification = WORK/'verification.json'
+if p.returncode not in (0, None) or not verification.exists():
+    raise SystemExit('Capture failed: missing successful fixture verification')
+print('Verified:', verification.read_text())
