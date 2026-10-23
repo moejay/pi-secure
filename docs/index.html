@@ -13,9 +13,9 @@
   <meta property="og:title" content="pi-secure — Keep the secret. Not the transcript.">
   <meta property="og:description" content="Use named secrets in Pi without putting their values in chat. Transcript hygiene, not a sandbox.">
   <meta property="og:url" content="https://moejay.github.io/pi-secure/">
-  <meta property="og:image" content="https://moejay.github.io/pi-secure/social.svg">
-  <meta property="og:image:alt" content="pi-secure. Keep the secret. Not the transcript.">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://moejay.github.io/pi-secure/media/preview.png">
+  <meta property="og:image:alt" content="pi-secure demo: a masked secret dialog with local reveal and copy controls.">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -37,27 +37,24 @@
         <p class="fine">Transcript hygiene. Not a sandbox or a secret manager. Does not protect secrets from a malicious or prompt-injected model.</p>
       </div>
       <figure class="demo">
-        <div class="terminal">
-          <div class="terminal-bar"><span class="terminal-dots" aria-hidden="true">● ● ●</span><span>pi / private handoff</span><span aria-hidden="true">↗</span></div>
-          <div class="terminal-body">
-            <p class="terminal-muted">01 / agent requests a named secret</p>
-            <pre><code><span class="terminal-accent">request_secret</span>({
-  name: "APP_TOKEN",
-  reason: "Authenticate a trusted task"
-})</code></pre>
-            <div class="private-dialog"><p class="terminal-accent">Secret requested: APP_TOKEN</p><p>Value: <span class="mask">********</span><span class="cursor" aria-hidden="true"></span></p><p class="terminal-muted">Enter: submit · Esc: cancel</p></div>
-            <p class="terminal-muted">02 / only availability returns</p>
-            <pre><code>{ "name": "APP_TOKEN", "available": true }</code></pre>
-            <div class="terminal-result"><span aria-hidden="true">✓</span> A name in context. A value in memory.</div>
-          </div>
-        </div>
-        <figcaption><span class="caption-line" aria-hidden="true"></span> Illustrative terminal mock. No real credentials.</figcaption>
+        <a class="demo-preview" href="#watch-demo" aria-label="Watch the pi-secure demo"><img src="./media/preview.png" width="1280" height="800" alt="pi-secure demo showing a masked secret and local reveal/copy controls." fetchpriority="high"></a>
+        <figcaption><span class="caption-line" aria-hidden="true"></span> A fake credential. A private handoff. <a href="#watch-demo">Watch the demo ↓</a></figcaption>
       </figure>
     </section>
 
     <div class="handoff wrap" aria-label="Secret lifecycle">
       <span><b>01</b> Enter or capture</span><span aria-hidden="true">→</span><span><b>02</b> Hold in memory</span><span aria-hidden="true">→</span><span><b>03</b> Use by name</span><span aria-hidden="true">→</span><span><b>04</b> Clear when done</span>
     </div>
+
+    <section class="walkthrough wrap section" id="watch-demo" aria-labelledby="demo-title">
+      <div class="section-heading"><p class="eyebrow">See the handoff</p><h2 id="demo-title">A secret by name.<br>Not by value.</h2></div>
+      <video controls playsinline preload="none" poster="./media/preview.png" width="1280" height="800" aria-label="pi-secure walkthrough using a fake credential" aria-describedby="demo-note">
+        <source src="./media/demo.mp4" type="video/mp4">
+        <track src="./media/demo.vtt" kind="captions" srclang="en" label="English" default>
+        Your browser does not support embedded video. <a href="./media/demo.mp4">Download the demo</a>.
+      </video>
+      <p id="demo-note" class="fine">Real Pi UI in a scripted local demo; no model calls. Fake credential; clipboard copy is simulated and your clipboard is untouched. No real secrets are recorded. <a href="./media/demo-transcript.md">Read the transcript and recording notes</a> · <a href="./media/demo.mp4">Download MP4</a></p>
+    </section>
 
     <section class="features wrap section" aria-labelledby="features-title">
       <div class="section-heading"><p class="eyebrow">Less exposure, less ceremony</p><h2 id="features-title">A private handoff.<br>A normal workflow.</h2></div>
