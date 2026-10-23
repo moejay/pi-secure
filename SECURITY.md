@@ -10,6 +10,7 @@ Only the latest release receives fixes. Use short-lived, least-privilege credent
 
 ## Important limits
 
+- A malicious or prompt-injected model can still obtain or exfiltrate secrets through its tools. pi-secure does not prevent prompt injection or enforce secret isolation; local reveal/copy confirmations do not secure other tool paths.
 - Shell commands can transmit or persist secrets; approve only trusted tasks.
 - Exact-value output redaction does not cover transformed, encoded, partial, or already-logged values, or other tools' output.
 - Terminal recording, input logging, clipboard managers/sync, process inspection, crash dumps, and other extensions are outside the boundary.

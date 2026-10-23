@@ -4,7 +4,9 @@
 
 Private secret entry, stdout capture, local reveal/copy, and redacted shell execution for [Pi](https://pi.dev). Transcript hygiene—not a sandbox or secret manager.
 
-[Website](https://moejay.github.io/pi-secure/) · [Security](SECURITY.md) · [Release process](RELEASING.md)
+[Website](https://moejay.github.io/pi-secure/) · [Security](SECURITY.md) · [Deployment & releases](RELEASING.md)
+
+> **Not protection against a malicious or compromised model.** A model acting on a prompt injection can still use its tools to obtain or leak secrets. pi-secure reduces accidental transcript exposure; it does not prevent prompt injection or enforce secret isolation.
 
 ## Install
 
@@ -83,6 +85,8 @@ Output is buffered, then exact known secret values are redacted from stdout/stde
 
 ## Security boundary
 
+**A malicious model—or one following a prompt injection—can still obtain or exfiltrate secrets.** For example, it could use a secret-bearing command to write a value to a file and read it with another tool, send it to an external destination, or transform it to evade exact-value redaction. There is no per-command approval or policy enforcement in `secure_exec`; confirmations on local reveal/copy do not protect other tool paths. Use only credentials and tasks you trust the agent to handle, preferably with external sandboxing, network restrictions, and least-privilege, short-lived tokens.
+
 **Transcript hygiene, not a sandbox or secret manager.** Commands can use secrets arbitrarily for authorized tasks. There are no destination or file-access restrictions. Keep values out of chat: do not read secret-bearing files through ordinary tools, include values in messages, or encode them to bypass redaction. These are agent instructions, not enforced isolation. Other tools' output is not redacted.
 
 Names, reasons, commands, availability, and redacted execution output are logged normally. Host extensions, process inspection, terminal input/debug recording, crash dumps, and the operating system are outside this protection. Only approve credentials for trusted tasks and destinations. Prefer short-lived, least-privilege tokens. Clear does not revoke credentials or erase copies held by running subprocesses.
@@ -96,6 +100,13 @@ npm pack --dry-run --ignore-scripts
 ```
 
 The package ships source directly, with no build step or runtime dependencies beyond Pi. CI checks Node 22 and 24. See [RELEASING.md](RELEASING.md) for the manually approved OIDC publishing workflow and release checklist.
+
+## Deployment and releases
+
+- **Website:** merge changes under `docs/` through a PR; GitHub Pages deploys automatically from `main` with no build step.
+- **npm:** bump the version in a PR, wait for CI, merge, then tag and manually dispatch `publish.yml` from `main`. The `npm` environment requires human approval; publishing uses OIDC and provenance, not a stored npm token.
+
+See [RELEASING.md](RELEASING.md) for preview, deployment, release, verification, and recovery commands. Documentation-only website updates do not require an npm release; the npm README changes only when a new package version is published.
 
 ## License
 
