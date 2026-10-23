@@ -34,7 +34,7 @@
         <p class="intro">Your agent needs to use a credential.<br>Its conversation doesn’t need to keep it.</p>
         <p class="hero-detail">Enter or capture secrets privately. Refer to them by name. Keep known values out of Pi’s tool results.</p>
         <div class="actions"><a class="button" href="#install">Install pi-secure <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/moejay/pi-secure#readme">Read the docs <span aria-hidden="true">↗</span></a></div>
-        <p class="fine">Transcript hygiene. Not a sandbox or a secret manager.</p>
+        <p class="fine">Transcript hygiene. Not a sandbox or a secret manager. Does not protect secrets from a malicious or prompt-injected model.</p>
       </div>
       <figure class="demo">
         <div class="terminal">
@@ -72,6 +72,7 @@
     <section class="boundary wrap" id="boundary" aria-labelledby="boundary-title">
       <div class="boundary-intro"><p class="eyebrow">An explicit boundary</p><h2 id="boundary-title">Cleaner transcripts.<br>Not a security perimeter.</h2><p>This is a way to reduce accidental exposure, not a promise that a secret cannot leave your machine.</p><a class="text-link" href="https://github.com/moejay/pi-secure#security-boundary">Read the full security boundary <span aria-hidden="true">↗</span></a></div>
       <div class="boundary-details">
+        <div><h3>Not a defense against a compromised model.</h3><p>A malicious model, or one following a prompt injection, can still obtain or leak secrets through its tools. It could write a secret to a file and read it back, send it elsewhere, or transform it to bypass exact-value redaction. pi-secure does not prevent prompt injection or enforce secret isolation. Reveal/copy confirmations do not protect other tool paths. Use external sandboxing and network restrictions where needed, plus short-lived, least-privilege credentials.</p></div>
         <div><h3>Trust the task and the destination.</h3><p>Commands can access files, send data, or save credentials. There are no destination or file-access restrictions. Never put literal values in chat or tool arguments; names, reasons, commands, and availability are logged normally.</p></div>
         <div><h3>Local doesn’t mean unobservable.</h3><p>Terminal input recording, scrollback, screen capture, host extensions, process inspection, debug logs, crash dumps, and the operating system are outside this protection. Revealing a value is not recording-proof.</p></div>
         <div><h3>Forget is not erase. Or revoke.</h3><p>Values live in extension memory and are forgotten on clear, reload, session start, or shutdown. JavaScript memory is not guaranteed to be zeroized. Clearing does not revoke credentials or erase subprocess copies. Prefer short-lived, least-privilege tokens.</p></div>
@@ -87,6 +88,6 @@
       </div>
     </section>
   </main>
-  <footer class="footer wrap"><div><a class="brand" href="./"><span class="mark" aria-hidden="true">[<span>∗</span>]</span> pi-secure</a><p>Keep useful context. Leave out the credential.</p></div><nav aria-label="Project links"><a href="https://github.com/moejay/pi-secure#readme">README</a><a href="https://github.com/moejay/pi-secure">GitHub</a><a href="https://www.npmjs.com/package/@moejay/pi-secure">npm</a></nav><p class="footer-note">An independent extension for <a href="https://pi.dev">Pi</a>.</p></footer>
+  <footer class="footer wrap"><div><a class="brand" href="./"><span class="mark" aria-hidden="true">[<span>∗</span>]</span> pi-secure</a><p>Keep useful context. Leave out the credential.</p></div><nav aria-label="Project links"><a href="https://github.com/moejay/pi-secure#readme">README</a><a href="https://github.com/moejay/pi-secure">GitHub</a><a href="https://www.npmjs.com/package/@moejay/pi-secure">npm</a><a href="https://github.com/moejay/pi-secure/blob/main/RELEASING.md">Deployment &amp; releases</a></nav><p class="footer-note">An independent extension for <a href="https://pi.dev">Pi</a>.</p></footer>
 </body>
 </html>
