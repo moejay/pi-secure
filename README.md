@@ -10,16 +10,16 @@ Private secret entry, stdout capture, local reveal/copy, and redacted shell exec
 
 Requires Node.js 22.19+ and Pi 1.4+; interactive terminal mode is required for private entry and local reveal/copy. Shell execution supports macOS and Linux, not native Windows.
 
-Install from GitHub now:
-
-```sh
-pi install git:github.com/moejay/pi-secure
-```
-
-After the first npm release (not published yet):
+Install from npm:
 
 ```sh
 pi install npm:@moejay/pi-secure
+```
+
+Or install from GitHub:
+
+```sh
+pi install git:github.com/moejay/pi-secure
 ```
 
 Restart or `/reload` after installing. Reload clears in-memory secrets. For local development, use `pi -e ./index.ts` or `pi install /absolute/path/to/pi-secure`.
@@ -95,7 +95,7 @@ npm run check
 npm pack --dry-run --ignore-scripts
 ```
 
-The package ships source directly, with no build step or runtime dependencies beyond Pi. CI checks Node 22 and 24. See [RELEASING.md](RELEASING.md) for the disabled-by-default OIDC publishing workflow and human setup checkpoint.
+The package ships source directly, with no build step or runtime dependencies beyond Pi. CI checks Node 22 and 24. See [RELEASING.md](RELEASING.md) for the manually approved OIDC publishing workflow and release checklist.
 
 ## License
 

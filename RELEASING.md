@@ -2,7 +2,7 @@
 
 ## Current state
 
-The npm workflow is deliberately disabled by default. No npm credential belongs in this repo, GitHub secrets, chat, or an agent tool argument.
+Version 0.1.0 was bootstrapped manually with 2FA. Subsequent releases use manually dispatched GitHub OIDC publishing, gated by the `NPM_PUBLISH_ENABLED` repository variable and the protected `npm` environment. No npm credential belongs in this repo, GitHub secrets, chat, or an agent tool argument.
 
 - Package: `@moejay/pi-secure`
 - Repository: `moejay/pi-secure`

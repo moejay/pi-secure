@@ -1,18 +1,49 @@
 {
   "name": "@moejay/pi-secure",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Request secrets privately and use them in subprocesses without putting values in Pi transcripts.",
-  "keywords": ["pi-package", "pi-extension", "secrets", "security", "privacy", "credentials", "clipboard", "developer-tools"],
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "secrets",
+    "security",
+    "privacy",
+    "credentials",
+    "clipboard",
+    "developer-tools"
+  ],
   "license": "MIT",
   "author": "moejay",
-  "repository": { "type": "git", "url": "git+https://github.com/moejay/pi-secure.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moejay/pi-secure.git"
+  },
   "homepage": "https://moejay.github.io/pi-secure/",
-  "bugs": { "url": "https://github.com/moejay/pi-secure/issues" },
-  "engines": { "node": ">=22.19.0" },
-  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
-  "files": ["index.ts", "secure.mjs", "clipboard.mjs", "README.md", "SECURITY.md", "RELEASING.md", "LICENSE"],
-  "pi": { "extensions": ["./index.ts"] },
+  "bugs": {
+    "url": "https://github.com/moejay/pi-secure/issues"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "index.ts",
+    "secure.mjs",
+    "clipboard.mjs",
+    "README.md",
+    "SECURITY.md",
+    "RELEASING.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
   "scripts": {
     "test": "node --test",
     "typecheck": "tsc --noEmit",
