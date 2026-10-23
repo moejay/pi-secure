@@ -34,7 +34,7 @@ jobs:
           git merge-base --is-ancestor "refs/tags/$RELEASE_TAG" origin/main
           git checkout --detach "refs/tags/$RELEASE_TAG"
           node --input-type=module -e 'import p from "./package.json" with {type:"json"}; if (process.env.RELEASE_TAG !== "v"+p.version || p.name !== "@moejay/pi-secure") process.exit(1)'
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
           registry-url: https://registry.npmjs.org
