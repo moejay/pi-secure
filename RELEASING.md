@@ -58,6 +58,18 @@ gh workflow run pages.yml --repo moejay/pi-secure --ref main
 
 Keep Pages configured to use **GitHub Actions**, not a branch/Jekyll build. README-only changes do not trigger Pages.
 
+## Gallery previews and demo media
+
+`package.json` uses `pi.image` and `pi.video` to give the Pi gallery public HTTPS preview URLs. The PNG, MP4, captions, and transcript are hosted under `docs/media/` on Pages, not bundled in the npm tarball. See [scripts/demo/README.md](https://github.com/moejay/pi-secure/blob/main/scripts/demo/README.md) for the isolated, scripted capture process.
+
+When updating media:
+
+1. Use only an obviously fake credential in an isolated session with no model calls or inherited authentication. Never record your normal terminal session or clipboard history.
+2. Keep simulated clipboard behavior explicitly labeled; do not silently replace the user's clipboard while recording. Include the malicious-model/prompt-injection limitation.
+3. Regenerate the thumbnail, captioned MP4, WebVTT captions, and text transcript together. Check readability, captions, and playback on mobile and desktop.
+4. Merge the media changes and verify the public Pages URLs before publishing npm metadata that points to them. Preserve old URLs when renaming assets so existing package versions do not get broken previews.
+5. A new npm version is needed for updated `pi.image` / `pi.video` metadata or the packaged README. Gallery indexing can lag behind npm; verify the published manifest instead of repeatedly republishing.
+
 ## npm: prepare a release PR
 
 Use a release branch. The example uses a patch increment; choose minor/major deliberately for feature/breaking changes.

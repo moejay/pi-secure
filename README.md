@@ -8,6 +8,14 @@ Private secret entry, stdout capture, local reveal/copy, and redacted shell exec
 
 > **Not protection against a malicious or compromised model.** A model acting on a prompt injection can still use its tools to obtain or leak secrets. pi-secure reduces accidental transcript exposure; it does not prevent prompt injection or enforce secret isolation.
 
+## Watch it work
+
+[![pi-secure demo: a masked secret dialog with local reveal and copy controls](https://moejay.github.io/pi-secure/media/preview.png)](https://moejay.github.io/pi-secure/#watch-demo)
+
+[Watch the captioned demo](https://moejay.github.io/pi-secure/#watch-demo) · [Download MP4](https://moejay.github.io/pi-secure/media/demo.mp4) · [Transcript and recording notes](https://moejay.github.io/pi-secure/media/demo-transcript.md)
+
+Real Pi UI in a scripted local demo, with no model calls and an obviously fake credential. Clipboard copy is simulated so recording does not touch your clipboard. It illustrates transcript hygiene—not protection against a malicious or prompt-injected model.
+
 ## Install
 
 Requires Node.js 22.19+ and Pi 1.4+; interactive terminal mode is required for private entry and local reveal/copy. Shell execution supports macOS and Linux, not native Windows.

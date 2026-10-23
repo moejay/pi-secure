@@ -1,8 +1,8 @@
 {
   "name": "@moejay/pi-secure",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
-  "description": "Request secrets privately and use them in subprocesses without putting values in Pi transcripts.",
+  "description": "Private secret entry, capture, local reveal/copy, and redacted shell execution for Pi. Transcript hygiene, not a sandbox.",
   "keywords": [
     "pi-package",
     "pi-extension",
@@ -42,7 +42,9 @@
   "pi": {
     "extensions": [
       "./index.ts"
-    ]
+    ],
+    "image": "https://moejay.github.io/pi-secure/media/preview.png",
+    "video": "https://moejay.github.io/pi-secure/media/demo.mp4"
   },
   "scripts": {
     "test": "node --test",

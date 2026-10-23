@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.400
+01 / Request privately. The input stays masked.
+
+00:00:03.400 --> 00:00:04.400
+Only the name and availability are returned.
+
+00:00:04.400 --> 00:00:08.500
+02 / Use the environment variable. Exact output is redacted.
+
+00:00:08.500 --> 00:00:10.200
+03 / Inspect locally. The secret starts masked.
+
+00:00:10.200 --> 00:00:12.000
+C → Y confirms copy. Clipboard is simulated in this demo.
+
+00:00:12.000 --> 00:00:14.300
+Copy succeeds without revealing. Native clipboard untouched.
+
+00:00:14.300 --> 00:00:16.200
+R → Y confirms reveal. Recordings can retain the value.
+
+00:00:16.200 --> 00:00:18.700
+Fake value revealed locally, then hidden again.
+
+00:00:18.700 --> 00:00:23.100
+04 / Clear the vault. The secret is no longer available.
+
+00:00:23.100 --> 00:00:26.000
+Transcript hygiene, not a security boundary.
