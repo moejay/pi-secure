@@ -105,7 +105,11 @@ npm run check
 npm pack --dry-run --ignore-scripts
 ```
 
-The package ships source directly, with no build step or runtime dependencies beyond Pi. CI checks Node 22 and 24. See [RELEASING.md](RELEASING.md) for the manually approved OIDC publishing workflow and release checklist.
+The package ships source directly, with no build step or runtime dependencies beyond Pi. CI checks the minimum Node 22.19.0 plus current Node 22 and 24. See [RELEASING.md](RELEASING.md) for the manually approved OIDC publishing workflow and release checklist.
+
+### Dependency maintenance
+
+Dependabot checks weekly. GitHub Actions updates are grouped into one PR; routine compiler/type updates are grouped separately, while compiler major upgrades get explicit review. Keep `@types/node` on Node 22 to match the minimum supported runtime—upgrading CI tooling does not raise the package's runtime requirement. Actions remain SHA-pinned, and dependency PRs still require passing CI and maintainer review.
 
 ## Deployment and releases
 
