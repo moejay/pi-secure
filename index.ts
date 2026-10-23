@@ -207,14 +207,30 @@ export default function (pi: ExtensionAPI) {
       timeout: Type.Optional(Type.Integer({ minimum: 1, maximum: 300 })),
     }),
     async execute(_id, params, signal, _update, ctx) {
+      if (!validName(params.name) || vault.has(params.name)) {
+        return { ...reply({ available: false, error: "Capture name is invalid or already exists. Choose a new name." }), isError: true };
+      }
       const lifetime = lifecycle;
-      const result = await secureExec({
-        isCurrent: () => lifecycle === lifetime && !lifetime.signal.aborted,
-        command: params.command, names: params.secrets ?? [], vault, cwd: ctx.cwd,
-        signal: operationSignal(signal), timeout: (params.timeout ?? 60) * 1000,
-        captureName: params.name, trimNewline: params.trimNewline ?? true,
-      });
-      return { ...reply(result), isError: !!result.error };
+      let result: Awaited<ReturnType<typeof secureExec>>;
+      try {
+        result = await secureExec({
+          isCurrent: () => lifecycle === lifetime && !lifetime.signal.aborted,
+          command: params.command, names: params.secrets ?? [], vault, cwd: ctx.cwd,
+          signal: operationSignal(signal), timeout: (params.timeout ?? 60) * 1000,
+          captureName: params.name, trimNewline: params.trimNewline ?? true,
+        });
+      } catch {
+        return { ...reply({ name: params.name, available: false, error: "Secret capture failed; output discarded." }), isError: true };
+      }
+      // Never forward helper results from capture mode. A stale native ESM
+      // helper can survive Pi reload and return ordinary execution output.
+      if (result.error || result.available !== true || result.name !== params.name || !vault.has(params.name)) {
+        const error = result.error
+          ? "Secret capture failed; output discarded."
+          : "Capture did not store a secret. Fully restart Pi before retrying.";
+        return { ...reply({ name: params.name, available: false, error }), isError: true };
+      }
+      return reply({ name: params.name, available: true });
     },
   }));
 

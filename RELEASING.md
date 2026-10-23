@@ -91,7 +91,7 @@ git push -u origin HEAD
 gh pr create --repo moejay/pi-secure --base main --fill
 ```
 
-Inspect the tarball allowlist: only the intended source, package metadata, license, README, security policy, and release guide should ship. Do not include credentials or local configuration. Smoke-test masked entry, cancellation, reveal/hide, and native clipboard copy both masked and visible on a supported platform; automated clipboard tests mock native utilities.
+Inspect the tarball allowlist: only the intended source, package metadata, license, README, security policy, and release guide should ship. Do not include credentials or local configuration. Fully restart Pi after helper changes or upgrades; on affected Pi versions `/reload` can retain cached native `.mjs` imports. Smoke-test `capture_secret` → `show_secret` with a disposable value (capture must return only name/availability), then masked entry, cancellation, reveal/hide, and native clipboard copy both masked and visible on a supported platform; automated clipboard tests mock native utilities.
 
 Review the PR and wait for both Node 22/24 CI checks before merging. Do not bypass branch protections.
 
