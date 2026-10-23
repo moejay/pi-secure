@@ -30,7 +30,7 @@ Or install from GitHub:
 pi install git:github.com/moejay/pi-secure
 ```
 
-Restart or `/reload` after installing. Reload clears in-memory secrets. For local development, use `pi -e ./index.ts` or `pi install /absolute/path/to/pi-secure`.
+**Fully restart Pi after installing or updating.** On affected Pi versions, `/reload` refreshes the TypeScript entry point but can retain cached `.mjs` helpers. A full restart loads a consistent version and clears in-memory secrets. If capture reports that no secret was stored, restart before retrying; do not use real credentials to diagnose it. For local development, use `pi -e ./index.ts` or `pi install /absolute/path/to/pi-secure`.
 
 ## Quick start
 
