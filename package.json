@@ -1,0 +1,34 @@
+{
+  "name": "@m0ejay/pi-secure",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Request secrets privately and use them in subprocesses without putting values in Pi transcripts.",
+  "keywords": ["pi-package", "pi-extension", "secrets", "security"],
+  "license": "MIT",
+  "author": "moejay",
+  "repository": { "type": "git", "url": "git+https://github.com/moejay/pi-secure.git" },
+  "homepage": "https://moejay.github.io/pi-secure/",
+  "bugs": { "url": "https://github.com/moejay/pi-secure/issues" },
+  "engines": { "node": ">=22.19.0" },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "files": ["index.ts", "secure.mjs", "clipboard.mjs", "README.md", "SECURITY.md", "RELEASING.md", "LICENSE"],
+  "pi": { "extensions": ["./index.ts"] },
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test",
+    "prepublishOnly": "npm run check"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-ai": "1.4.0",
+    "@earendil-works/pi-coding-agent": "1.4.0",
+    "@earendil-works/pi-tui": "1.4.0",
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  }
+}
