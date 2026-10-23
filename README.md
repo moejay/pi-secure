@@ -19,7 +19,7 @@ pi install git:github.com/moejay/pi-secure
 After the first npm release (not published yet):
 
 ```sh
-pi install npm:@m0ejay/pi-secure
+pi install npm:@moejay/pi-secure
 ```
 
 Restart or `/reload` after installing. Reload clears in-memory secrets. For local development, use `pi -e ./index.ts` or `pi install /absolute/path/to/pi-secure`.

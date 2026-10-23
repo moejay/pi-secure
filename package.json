@@ -1,9 +1,9 @@
 {
-  "name": "@m0ejay/pi-secure",
+  "name": "@moejay/pi-secure",
   "version": "0.1.0",
   "type": "module",
   "description": "Request secrets privately and use them in subprocesses without putting values in Pi transcripts.",
-  "keywords": ["pi-package", "pi-extension", "secrets", "security"],
+  "keywords": ["pi-package", "pi-extension", "secrets", "security", "privacy", "credentials", "clipboard", "developer-tools"],
   "license": "MIT",
   "author": "moejay",
   "repository": { "type": "git", "url": "git+https://github.com/moejay/pi-secure.git" },

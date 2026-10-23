@@ -4,14 +4,14 @@
 
 The npm workflow is deliberately disabled by default. No npm credential belongs in this repo, GitHub secrets, chat, or an agent tool argument.
 
-- Package: `@m0ejay/pi-secure`
+- Package: `@moejay/pi-secure`
 - Repository: `moejay/pi-secure`
 - Workflow: `publish.yml`
 - GitHub environment: `npm`
 
 ## First release (human checkpoint)
 
-1. Confirm ownership of the npm `m0ejay` scope and enable 2FA.
+1. Confirm ownership of the npm `moejay` scope and enable 2FA.
 2. Run `npm ci --ignore-scripts && npm run check` and inspect `npm pack --dry-run --ignore-scripts`. Smoke-test the dialogs and native clipboard on your platform.
 3. Bootstrap the package if npm requires it before trusted publisher configuration: use interactive `npm login` and `npm publish --access public` locally with 2FA. Do not give the agent a token or OTP. This first manual upload may not have provenance.
 4. In npm package settings, configure GitHub Actions trusted publishing: owner `moejay`, repo `pi-secure`, workflow filename `publish.yml`, environment `npm`. Allow direct `npm publish` (staged-only permissions will not work with this workflow).
