@@ -4,10 +4,22 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    open-pull-requests-limit: 3
+    # Node 22 is the minimum runtime; newer-major types can hide unsupported APIs.
+    ignore:
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       pi:
         patterns: ['@earendil-works/*']
+      development-tools:
+        patterns: ['typescript', '@types/node']
+        update-types: ['minor', 'patch']
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    open-pull-requests-limit: 1
+    groups:
+      github-actions:
+        patterns: ['*']
