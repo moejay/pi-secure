@@ -26,15 +26,16 @@ test("preview is a PNG and video uses an MP4 container", async () => {
   assert.equal(mp4.subarray(4, 8).toString(), "ftyp");
 });
 
-test("website demo is opt-in, captioned, and has a transcript", async () => {
+test("website video is opt-in and captioned, with a separate text transcript", async () => {
   const html = await readFile(new URL("docs/index.html", root), "utf8");
   const video = html.match(/<video\b[^>]*>/)?.[0];
   assert.ok(video);
   assert.match(video, /\bcontrols\b/);
   assert.match(video, /\bpreload="none"/);
   assert.doesNotMatch(video, /\bautoplay\b/);
-  assert.match(html, /src="\.\/media\/demo\.vtt" kind="captions"/);
-  assert.match(html, /href="\.\/media\/demo-transcript\.md"/);
+  assert.match(html, /src="\.\/media\/demo\.vtt(?:\?[^"]+)?" kind="captions"/);
+  const transcript = await readFile(new URL("docs/media/demo-transcript.md", root), "utf8");
+  assert.ok(transcript.length > 100);
   const captions = await readFile(new URL("docs/media/demo.vtt", root), "utf8");
   assert.match(captions, /^WEBVTT/);
 });

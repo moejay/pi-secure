@@ -10,11 +10,9 @@ Private secret entry, stdout capture, local reveal/copy, and redacted shell exec
 
 ## Watch it work
 
-[![pi-secure demo: a masked secret dialog with local reveal and copy controls](https://moejay.github.io/pi-secure/media/preview.png)](https://moejay.github.io/pi-secure/#watch-demo)
+[![Check a private build with pi-secure](https://moejay.github.io/pi-secure/media/preview.png?v=0.1.3)](https://moejay.github.io/pi-secure/#watch-demo)
 
-[Watch the captioned demo](https://moejay.github.io/pi-secure/#watch-demo) · [Download MP4](https://moejay.github.io/pi-secure/media/demo.mp4) · [Transcript and recording notes](https://moejay.github.io/pi-secure/media/demo-transcript.md)
-
-Real Pi UI in a scripted local demo, with no model calls and an obviously fake credential. Clipboard copy is simulated so recording does not touch your clipboard. It illustrates transcript hygiene—not protection against a malicious or prompt-injected model.
+[Watch the walkthrough →](https://moejay.github.io/pi-secure/#watch-demo)
 
 ## Install
 
