@@ -26,6 +26,18 @@ test("preview is a PNG and video uses an MP4 container", async () => {
   assert.equal(mp4.subarray(4, 8).toString(), "ftyp");
 });
 
+test("website documents direct local secret management and current safety guidance", async () => {
+  const html = await readFile(new URL("docs/index.html", root), "utf8");
+  for (const command of ["/secret list", "/secret show NAME", "/secret clear NAME", "/secret clear"]) {
+    assert.ok(html.includes(command), `missing ${command}`);
+  }
+  assert.match(html, /One asterisk per character/);
+  assert.match(html, /fully restart Pi/);
+  assert.match(html, /Clearing even one cancels active secure operations/);
+  assert.match(html, /large or numerous secrets can exceed redaction limits/);
+  assert.doesNotMatch(html, /v=0\.1\.3/);
+});
+
 test("website video is opt-in and captioned, with a separate text transcript", async () => {
   const html = await readFile(new URL("docs/index.html", root), "utf8");
   const video = html.match(/<video\b[^>]*>/)?.[0];
@@ -34,6 +46,7 @@ test("website video is opt-in and captioned, with a separate text transcript", a
   assert.match(video, /\bpreload="none"/);
   assert.doesNotMatch(video, /\bautoplay\b/);
   assert.match(html, /src="\.\/media\/demo\.vtt(?:\?[^"]+)?" kind="captions"/);
+  assert.match(html, /href="\.\/media\/demo-transcript\.md"/);
   const transcript = await readFile(new URL("docs/media/demo-transcript.md", root), "utf8");
   assert.ok(transcript.length > 100);
   const captions = await readFile(new URL("docs/media/demo.vtt", root), "utf8");

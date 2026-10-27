@@ -39,6 +39,8 @@ while time.monotonic()-start < 45:
         next_frame += 0.1
     if p.poll() is not None: break
 if p.poll() is None: p.terminate()
+p.wait(timeout=5)
+os.close(master)
 (WORK/'capture.ansi').write_bytes(raw)
 (WORK/'frames.json').write_text(json.dumps(frames))
 print(WORK)
@@ -49,3 +51,21 @@ verification = WORK/'verification.json'
 if p.returncode not in (0, None) or not verification.exists():
     raise SystemExit('Capture failed: missing successful fixture verification')
 print('Verified:', verification.read_text())
+
+# Verify the terminal cells too, not just component render calls.
+texts = ['\n'.join(''.join(c['c'] for c in row) for row in f['rows']) for f in frames]
+assertions = {
+    'requestMaskCounts': all(any(re.search(r'Value: ' + r'\*' * n + r' ', t) for t in texts) for n in (8, 14, 18, 23)),
+    'centeredRequestPanel': any('SECRET REQUEST • BUILD_TOKEN' in t and '┏' in t and '┗' in t for t in texts),
+    'localShowDialog': any('PRIVATE SECRET • BUILD_TOKEN' in t and '******** (masked)' in t for t in texts),
+    'browserScrolledToLast': any('15/15' in t and '› DEMO_TOKEN_14' in t for t in texts),
+    'browserSelectedShow': any('PRIVATE SECRET • DEMO_TOKEN_14' in t for t in texts),
+    'browserClearConfirmation': any('Forget DEMO_TOKEN_14?' in t and 'Y/N: forget?' in t for t in texts),
+    'browserRefreshed': any('14/14' in t and 'DEMO_TOKEN_14' not in t for t in texts),
+}
+report = json.loads(verification.read_text())
+report['terminalAssertions'] = assertions
+verification.write_text(json.dumps(report, indent=2) + '\n')
+if not all(assertions.values()):
+    raise SystemExit('Terminal verification failed: ' + json.dumps(assertions))
+print('Terminal assertions:', json.dumps(assertions))

@@ -10,9 +10,11 @@ Private secret entry, stdout capture, local reveal/copy, and redacted shell exec
 
 ## Watch it work
 
-[![Check a private build with pi-secure](https://moejay.github.io/pi-secure/media/preview.png?v=0.1.3)](https://moejay.github.io/pi-secure/#watch-demo)
+[![Private dialogs and secret browsing with pi-secure](https://moejay.github.io/pi-secure/media/preview.png?v=ui-browser-1)](https://moejay.github.io/pi-secure/#watch-demo)
 
-[Watch the walkthrough →](https://moejay.github.io/pi-secure/#watch-demo)
+[Watch the walkthrough →](https://moejay.github.io/pi-secure/#watch-demo) · [Text transcript](docs/media/demo-transcript.md)
+
+See the bordered entry dialog with live masking, direct local reveal, and keyboard browsing with confirmed deletion. The demo uses synthetic credentials, no model calls, and no clipboard writes.
 
 ## Install
 
@@ -36,11 +38,13 @@ pi install git:github.com/moejay/pi-secure
 
 Ask Pi: “Ask me securely for my API token, then use it to call the service.” Enter the value only in the masked dialog—not in chat, a command, or a tool argument. The agent receives a name and availability status, never the entered value.
 
+Then use `/secret list` to browse, reveal/copy, or forget stored secrets yourself, or `/secret show NAME` to open one directly—no AI prompt needed.
+
 ## Tools
 
 ### `request_secret({ name, reason })`
 
-The agent requests a secret; you enter it in a masked terminal dialog. Only name/availability is returned. Enter submits; Escape/Ctrl+C cancels. Empty, NUL, and multiline input cannot be submitted. Existing names are reused.
+The agent requests a secret; you enter it in a centered, bordered terminal dialog with a highlighted header and background. Input stays masked, with one asterisk per character as you type or delete (revealing the input length locally). Only name/availability is returned. Enter submits; Escape/Ctrl+C cancels. Empty, NUL, and multiline input cannot be submitted. Existing names are reused.
 
 ### `capture_secret({ name, command, secrets?, trimNewline?, timeout? })`
 
@@ -56,7 +60,7 @@ Commands and paths are logged normally: **never embed literal secret values in a
 
 ### `show_secret({ name })`
 
-Opens a local overlay **masked by default**, never a tool result:
+Opens a centered, bordered local overlay with a highlighted header and background, **masked by default**, never a tool result:
 
 - **R**: reveal or hide. Revealing requires **Y** confirmation.
 - **C**: copy to clipboard, whether masked or visible. Copying requires **Y** confirmation.
@@ -82,12 +86,20 @@ secure_exec({
 
 Output is buffered, then exact known secret values are redacted from stdout/stderr. No streaming or raw-output temporary files. Only child processes receive the injected environment; Pi's global environment is unchanged.
 
+## Commands (no AI tool call needed)
+
+- `/secret show NAME` opens the existing private, masked reveal/copy dialog directly. R reveals/hides; C copies; both require Y confirmation. Requires interactive terminal mode.
+- `/secret list` opens a centered, bordered browser of **names only**. Use **↑/↓ or j/k** to select; long lists scroll within a bounded viewport. **Enter/R** opens the selected secret's reveal/copy dialog, then returns to the browser. **D/Delete** asks for **Y** confirmation to forget the selected secret (**N/Escape** backs out). **Escape/Ctrl+C** closes the browser. An empty vault shows a friendly empty state. Outside terminal mode, list only reports names.
+- `/secret clear NAME` forgets one value; `/secret clear` forgets all values immediately.
+
+Never enter secret values in slash commands. Neither command notifications nor tool results include values. Browser deletion cancels existing secure operations and queued dialogs just like `/secret clear NAME`, then intentionally reopens a fresh browser. External clear or session changes close the browser instead.
+
 ## Storage and limits
 
-- `/secret list` shows names; `/secret clear` forgets values.
 - Values live in extension memory only, not session entries, result details, or model context. They disappear on reload, session start, shutdown, or clear. JavaScript cannot guarantee memory zeroization.
 - Commands default to a 60-second timeout (configurable up to 300 seconds), with a 1 MiB combined output limit. Timeout, cancellation, and overflow discard all output.
-- Concurrent private dialogs are queued. Clearing secrets or ending the session cancels active operations and invalidates queued dialogs; clear does not revoke credentials or erase external copies.
+- Concurrent private dialogs are queued. Clearing even one secret or ending the session cancels all active secure operations and invalidates queued dialogs, preventing pending captures/input from restoring forgotten values. Other stored secrets remain available after a single-secret clear. Clear does not revoke credentials or erase external copies.
+- If output processing fails, output is withheld to prevent secret exposure. Redaction checks every stored secret, even ones not injected into the command; very large secrets or many accumulated secrets can exceed the regex engine's limits. Use `/secret list` and `/secret clear NAME` to remove unneeded large captures, or `/secret clear` to reset the vault. The command may already have completed: check its effects before rerunning it.
 
 ## Security boundary
 

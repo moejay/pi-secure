@@ -9,6 +9,19 @@ const value = "private.token+$[abc]";
 const vault = new Map([["TEST_SECRET", value]]);
 const run = (command, extra = {}) => secureExec({ command, names: ["TEST_SECRET"], vault, cwd: process.cwd(), ...extra });
 
+test("redaction failure explains vault limits and safe recovery without leaking output", async () => {
+  const result = await run('printf sensitive-output', {
+    vault: new Map([["LARGE_SECRET", "a".repeat(100_000)]]), names: [],
+  });
+  assert.match(result.error, /Could not process command output; output discarded/);
+  assert.match(result.error, /all stored secrets are checked/);
+  assert.match(result.error, /\/secret clear NAME/);
+  assert.match(result.error, /command may already have completed/);
+  assert.equal("stdout" in result, false);
+  assert.equal("stderr" in result, false);
+  assert.equal(JSON.stringify(result).includes("sensitive-output"), false);
+});
+
 test("capture stores stdout privately and discards stderr", async () => {
   const store = new Map(vault);
   const result = await run('printf "%s\\n" "$TEST_SECRET"; echo sensitive-error >&2', { vault: store, captureName: "CAPTURED" });

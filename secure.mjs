@@ -101,7 +101,7 @@ export async function secureExec({ command, names, vault, cwd, signal, timeout =
         }
       } catch {
         // Fail closed if output decoding/redaction cannot be completed.
-        result = { error: "Could not process command output; output discarded." };
+        result = { error: "Could not process command output; output discarded to prevent secret exposure. Redaction can fail when a stored secret is very large or many secrets accumulate; all stored secrets are checked, not just those injected. Use /secret list, then /secret clear NAME to forget an unneeded secret, or /secret clear to forget all secrets, and retry. The command may already have completed; check its effects before rerunning." };
       }
       stdout.length = 0; stderr.length = 0;
       resolve(result);
