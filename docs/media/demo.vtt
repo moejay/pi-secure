@@ -1,25 +1,37 @@
 WEBVTT
 
-00:00:00.000 --> 00:00:03.800
-Enter the build token privately.
+00:00:00.000 --> 00:00:04.500
+Private request: asterisks grow with every typed character.
 
-00:00:03.800 --> 00:00:04.800
-The conversation receives a name, not a value.
+00:00:04.500 --> 00:00:05.400
+Only the name and availability enter the conversation.
 
-00:00:04.800 --> 00:00:10.000
-An authenticated localhost request. Build 184 passed.
+00:00:05.400 --> 00:00:08.600
+secure_exec authenticates to localhost. Build 184 passed.
 
-00:00:10.000 --> 00:00:11.600
-Inspect the token locally. It starts masked.
+00:00:08.600 --> 00:00:10.300
+/secret show BUILD_TOKEN opens the masked local dialog.
 
-00:00:11.600 --> 00:00:13.800
-Reveal only after confirmation.
+00:00:10.300 --> 00:00:12.000
+R asks for confirmation. Y reveals locally.
 
-00:00:13.800 --> 00:00:17.500
-The example token is visible locally, then hidden.
+00:00:12.000 --> 00:00:14.800
+Synthetic token only. R hides it; Enter closes. No clipboard.
 
-00:00:17.500 --> 00:00:21.500
-Clear the vault. The token is no longer available.
+00:00:14.800 --> 00:00:19.700
+/secret list: scroll through names and select a secret.
 
-00:00:21.500 --> 00:00:24.000
-Transcript hygiene, not a sandbox.
+00:00:19.700 --> 00:00:22.000
+Enter opens the selected secret, masked. Close to return.
+
+00:00:22.000 --> 00:00:25.700
+D asks to forget the selection. Y confirms.
+
+00:00:25.700 --> 00:00:28.000
+The browser refreshes: the selected name is gone.
+
+00:00:28.000 --> 00:00:30.500
+/secret clear forgets the remaining in-memory secrets.
+
+00:00:30.500 --> 00:00:32.000
+Transcript hygiene, not a sandbox. Clearing cannot erase recordings.

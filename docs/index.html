@@ -13,8 +13,8 @@
   <meta property="og:title" content="pi-secure — Keep the secret. Not the transcript.">
   <meta property="og:description" content="Use named secrets in Pi without putting their values in chat. Transcript hygiene, not a sandbox.">
   <meta property="og:url" content="https://moejay.github.io/pi-secure/">
-  <meta property="og:image" content="https://moejay.github.io/pi-secure/media/preview.png?v=0.1.3">
-  <meta property="og:image:alt" content="Check a private build with pi-secure, keeping the API token out of the conversation.">
+  <meta property="og:image" content="https://moejay.github.io/pi-secure/media/preview.png?v=ui-browser-1">
+  <meta property="og:image:alt" content="pi-secure's private secret browser and prominent masked dialogs.">
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
@@ -37,7 +37,7 @@
         <p class="fine">Transcript hygiene. Not a sandbox or a secret manager. Does not protect secrets from a malicious or prompt-injected model.</p>
       </div>
       <figure class="demo">
-        <a class="demo-preview" href="#watch-demo" aria-label="Watch pi-secure check a private build"><img src="./media/preview.png?v=0.1.3" width="1280" height="800" alt="pi-secure checking a private build using a privately entered API token." fetchpriority="high"></a>
+        <a class="demo-preview" href="#watch-demo" aria-label="Watch pi-secure's private dialogs and secret browser"><img src="./media/preview.png?v=ui-browser-1" width="1280" height="800" alt="pi-secure's bordered private dialogs and keyboard-driven secret browser." fetchpriority="high"></a>
         <figcaption><span class="caption-line" aria-hidden="true"></span> Use the token. Keep it out of the conversation. <a href="#watch-demo">Watch it work ↓</a></figcaption>
       </figure>
     </section>
@@ -47,21 +47,22 @@
     </div>
 
     <section class="walkthrough wrap section" id="watch-demo" aria-labelledby="demo-title">
-      <div class="section-heading"><p class="eyebrow">See it in action</p><h2 id="demo-title">Check a private build.<br>Keep the token private.</h2></div>
-      <video controls playsinline preload="none" poster="./media/preview.png?v=0.1.3" width="1280" height="800" aria-label="Check a private build with pi-secure">
-        <source src="./media/demo.mp4?v=0.1.3" type="video/mp4">
-        <track src="./media/demo.vtt?v=0.1.3" kind="captions" srclang="en" label="English">
-        Your browser does not support embedded video. <a href="./media/demo.mp4?v=0.1.3">Watch the walkthrough</a>.
+      <div class="section-heading"><p class="eyebrow">See it in action</p><h2 id="demo-title">Use a secret.<br>Manage it on your terms.</h2></div>
+      <video controls playsinline preload="none" poster="./media/preview.png?v=ui-browser-1" width="1280" height="800" aria-label="Private secret entry, local reveal, and keyboard browsing with pi-secure">
+        <source src="./media/demo.mp4?v=ui-browser-1" type="video/mp4">
+        <track src="./media/demo.vtt?v=ui-browser-1" kind="captions" srclang="en" label="English">
+        Your browser does not support embedded video. <a href="./media/demo.mp4?v=ui-browser-1">Watch the walkthrough</a>.
       </video>
+      <p><a href="./media/demo-transcript.md">Read the demo transcript</a>. Recorded with synthetic credentials; no model calls or clipboard writes.</p>
     </section>
 
     <section class="features wrap section" aria-labelledby="features-title">
       <div class="section-heading"><p class="eyebrow">Less exposure, less ceremony</p><h2 id="features-title">A private handoff.<br>A normal workflow.</h2></div>
       <div class="feature-grid">
-        <article><span class="feature-number">01 / INPUT</span><h3>Ask without the paste.</h3><p><code>request_secret</code> opens a masked terminal dialog. The agent receives only a name and availability—not the value. Cancel any time before submitting.</p></article>
+        <article><span class="feature-number">01 / INPUT</span><h3>Ask without the paste.</h3><p><code>request_secret</code> opens a centered, bordered dialog with a highlighted header and background. One asterisk per character tracks typing and deletion, exposing only the input length locally. The agent receives only a name and availability—not the value. Cancel before submitting.</p></article>
         <article><span class="feature-number">02 / CAPTURE</span><h3>Stdout stays private.</h3><p><code>capture_secret</code> stores a command’s stdout directly in extension memory. Neither stdout nor stderr is returned to the agent, even on failure. Commands and paths are still logged.</p></article>
-        <article><span class="feature-number">03 / LOCAL ACCESS</span><h3>Reveal on your terms.</h3><p><code>show_secret</code> opens a masked local dialog for up to 30 seconds. Press <kbd>R</kbd> to reveal/hide or <kbd>C</kbd> to copy without revealing. Reveal and copy require explicit confirmation; only shown/copied status returns to the agent.</p><p class="feature-note">Clipboard managers, history, and sync may retain copied values. The clipboard is not automatically cleared.</p></article>
-        <article><span class="feature-number">04 / EXECUTION</span><h3>Use it. Redact the echo.</h3><p><code>secure_exec</code> injects named secrets into child-process environment variables. Output is buffered; exact known values are redacted from stdout and stderr before returning.</p><p class="feature-note">Not pattern detection: encoded or transformed values can escape redaction. Other tools’ output is not covered.</p></article>
+        <article><span class="feature-number">03 / LOCAL ACCESS</span><h3>Reveal on your terms.</h3><p>Run <code>/secret show NAME</code> directly, or <code>/secret list</code> to browse names with <kbd>↑</kbd>/<kbd>↓</kbd> or <kbd>J</kbd>/<kbd>K</kbd>. <kbd>Enter</kbd> opens the selected secret's masked dialog; <kbd>D</kbd> asks to forget it. No AI prompt needed. In the dialog, <kbd>R</kbd> reveals/hides and <kbd>C</kbd> copies; reveal and copy require <kbd>Y</kbd> confirmation. The dialog closes after 30 seconds.</p><p class="feature-note">Clipboard managers, history, and sync may retain copied values. The clipboard is not automatically cleared.</p></article>
+        <article><span class="feature-number">04 / EXECUTION</span><h3>Use it. Redact the echo.</h3><p><code>secure_exec</code> injects named secrets into child-process environment variables. Output is buffered; exact known values are redacted from stdout and stderr before returning.</p><p class="feature-note">Not pattern detection: encoded or transformed values can escape redaction. Other tools’ output is not covered. All stored values are checked; large or numerous secrets can exceed redaction limits. Output is then withheld, with recovery guidance. Check the command's effects before retrying.</p></article>
       </div>
     </section>
 
@@ -76,11 +77,11 @@
     </section>
 
     <section class="install wrap section" id="install" aria-labelledby="install-title">
-      <div><p class="eyebrow">Small by design</p><h2 id="install-title">Bring it to your terminal.</h2><p>Already using <a href="https://pi.dev">Pi</a>? Review the source, install from npm or git, then restart Pi or run <code>/reload</code>.</p><p class="fine">Inspect third-party extensions before loading them.</p></div>
+      <div><p class="eyebrow">Small by design</p><h2 id="install-title">Bring it to your terminal.</h2><p>Already using <a href="https://pi.dev">Pi</a>? Review the source, install from npm or git, then fully restart Pi. <code>/reload</code> can retain stale helper modules.</p><p class="fine">Inspect third-party extensions before loading them.</p></div>
       <div class="install-options">
         <div class="install-option"><div class="install-label"><h3>Install now</h3><span class="badge available">Git</span></div><pre tabindex="0" aria-label="Git install command"><code>pi install git:github.com/moejay/pi-secure</code></pre></div>
         <div class="install-option"><div class="install-label"><h3>Install from npm</h3><span class="badge available">npm</span></div><pre tabindex="0" aria-label="npm install command"><code>pi install npm:@moejay/pi-secure</code></pre><p>Published on npm. Includes the pi-package discovery keyword.</p></div>
-        <p class="housekeeping"><code>/secret list</code> to see names. <code>/secret clear</code> to forget values.</p>
+        <p class="housekeeping"><code>/secret list</code> to browse, reveal/copy, or forget a selected secret. <code>/secret show NAME</code> to open one directly. <code>/secret clear NAME</code> to forget one; <code>/secret clear</code> to forget all. Clearing even one cancels active secure operations and queued dialogs; other stored values remain available.</p>
       </div>
     </section>
   </main>
